@@ -1,0 +1,137 @@
+.table-node {
+  border: 1px solid #d4e916;
+  border-radius: 6px;
+  padding: 10px;
+  background: white;
+  min-width: 280px;
+}
+
+.table-title {
+  width: 100%;
+  font-weight: bold;
+  margin-bottom: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.prithu-column {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.column-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.column-row input,
+.column-row select {
+  font-size: 12px;
+}
+
+input {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+label {
+  font-size: 11px;
+}
+
+button {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+.close-button {
+  background: red;
+  border: none;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.prithu-hide-me {
+  position:absolute;
+  bottom: -10px;
+  right: 0;
+  width:100px;
+  height:20px;
+  background: rebeccapurple;
+  z-index: 9999999;
+  font-size: small;
+  padding: 3px;
+  color: white;
+}
+
+.prithu-flex {
+  display: flex;
+  gap: 10px;
+}
+
+.table-node {
+  position: relative;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.table-node.deleting {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+/* ==========================
+   MODAL STYLES
+========================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal {
+  width: 700px;
+  max-height: 80vh;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sql-box {
+  background: #111;
+  color: #00ff88;
+  padding: 15px;
+  border-radius: 6px;
+  overflow: auto;
+  font-family: monospace;
+  font-size: 14px;
+  margin-top: 10px;
+  flex: 1;
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
