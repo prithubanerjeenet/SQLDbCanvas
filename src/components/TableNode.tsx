@@ -180,6 +180,7 @@ export default function TableNode({ id, data }: Props) {
                 <option value="NVARCHAR">NVARCHAR</option>
                 <option value="VARCHAR">VARCHAR</option>
                 <option value="VARBINARY(MAX)">VARBINARY(MAX)</option>
+                <option value="DECIMAL">DECIMAL</option>
                 <option value="TEXT">TEXT</option>
                 <option value="DATE">DATE</option>
                 <option value="BOOLEAN">BOOLEAN</option>
