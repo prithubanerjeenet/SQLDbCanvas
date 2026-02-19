@@ -1,6 +1,6 @@
 import { Handle, Position, useReactFlow } from "@xyflow/react";
 import type { TableNodeData } from "../pageTypes/TableType";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   id: string;
@@ -10,8 +10,8 @@ interface Props {
 export default function TableNode({ id, data }: Props) {
   const { setNodes, setEdges } = useReactFlow();
   const [isDeleting, setIsDeleting] = useState(false);
-   const [lastAddedColumnId, setLastAddedColumnId] = useState<number | null>(null);
-const inputRefs = useRef<Record<number, HTMLInputElement | null>>({});
+   //const [lastAddedColumnId, setLastAddedColumnId] = useState<number | null>(null);
+  //const inputRefs = useRef<Record<number, HTMLInputElement | null>>({});
   
   const updateNode = (updatedColumns: any, updatedName?: string) => {
     setNodes((nodes) =>
