@@ -176,12 +176,13 @@ export default function TableNode({ id, data }: Props) {
                   updateColumn(col.id, "type", e.target.value)
                 }
               >
-                <option value="INT">int</option>
-                <option value="NVARCHAR">nvarchar</option>
-                <option value="VARCHAR">varchar</option>
-                <option value="TEXT">text</option>
-                <option value="DATE">date</option>
-                <option value="BOOLEAN">boolean</option>
+                <option value="INT">INT</option>
+                <option value="NVARCHAR">NVARCHAR</option>
+                <option value="VARCHAR">VARCHAR</option>
+                <option value="VARBINARY(MAX)">VARBINARY(MAX)</option>
+                <option value="TEXT">TEXT</option>
+                <option value="DATE">DATE</option>
+                <option value="BOOLEAN">BOOLEAN</option>
               </select>
 
 
@@ -192,7 +193,7 @@ export default function TableNode({ id, data }: Props) {
                 }
                 placeholder="Length"
                 style={{ width: "60px" }}
-                disabled={col.type === "INT" || col.type === "DATE" || col.type === "BOOLEAN"}
+                disabled={col.type === "INT" || col.type === "DATE" || col.type === "BOOLEAN" || col.type === "VARBINARY(MAX)"}
               />
 
               <label>
