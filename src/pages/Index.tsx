@@ -190,9 +190,41 @@ export default function Index() {
       sql += ");\n\n";
     });
 
+    edges.forEach((edge) => {
+    const parentNode = nodes.find((n) => n.id === edge.source);
+    const childNode = nodes.find((n) => n.id === edge.target);
+
+    if (!parentNode || !childNode) return;
+
+    const parentTable = parentNode.data.table;
+    const childTable = childNode.data.table;
+
+    // remove "source-" / "target-" prefix
+   const parentColumnId = edge.sourceHandle
+                          ? Number(edge.sourceHandle.replace("source-", ""))
+                          : undefined;
+
+  const childColumnId = edge.targetHandle
+                        ? Number(edge.targetHandle.replace("target-", ""))
+                        : undefined;
+
+    const parentColumn = parentTable.columns.find((c) => c.id === parentColumnId);
+    const childColumn = childTable.columns.find((c) => c.id === childColumnId);
+
+    if (!parentColumn || !childColumn) return;
+
+     const constraintName = `FK_${childTable.name}_${childColumn.name}_${parentTable.name}`;
+
+    sql += `ALTER TABLE ${childTable.name}\n`;
+    sql += `ADD CONSTRAINT ${constraintName}\n`;
+    sql += `FOREIGN KEY (${childColumn.name})\n`;
+    sql += `REFERENCES ${parentTable.name}(${parentColumn.name}) ON DELETE CASCADE;\n\n`;
+  });
+
     setSqlScript(sql);
     setShowModal(true);
   };
+
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

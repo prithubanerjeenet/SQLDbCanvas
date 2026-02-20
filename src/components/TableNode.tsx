@@ -1,7 +1,7 @@
 import { Handle, Position, useReactFlow } from "@xyflow/react";
 import type { TableNodeData } from "../pageTypes/TableType";
 import React, { useEffect, useRef, useState } from "react";
-import type { Column } from "../pageTypes/Index";
+
 
 interface Props {
   id: string;
@@ -13,7 +13,6 @@ export default function TableNode({ id, data }: Props) {
   const [isDeleting, setIsDeleting] = useState(false);
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
-const [draggedColumnId, setDraggedColumnId] = useState<number | null>(null);
 const [dragPosition, setDragPosition] = useState<{
   id: number | null;
   type: "above" | "below" | null;
@@ -88,62 +87,6 @@ const [dragPosition, setDragPosition] = useState<{
       );
     }, 250); // match animation duration
   };
-
-//  const onDragStart = (
-//   ev: React.DragEvent<HTMLLIElement>,
-//   colId: number
-// ): void => {
-//   dragItem.current = colId;
-// };
-
-// const onDragOver = (ev: React.DragEvent<HTMLLIElement>): void => {
-//   ev.preventDefault();
-// };
-
-// const onDragEnter = (
-//   ev: React.DragEvent<HTMLLIElement>,
-//   colId: number
-// ): void => {
-//   dragOverItem.current = colId;
-// };
-
-// const onDrop = (e: React.DragEvent<HTMLLIElement>) => {
-//   e.preventDefault();
-
-//   if (
-//     dragItem.current === null ||
-//     dragOverItem.current === null
-//   )
-//     return;
-
-//   const draggedId = dragItem.current;
-//   const targetId = dragOverItem.current;
-
-//   if (draggedId === targetId) return;
-
-//   const updatedColumns = [...data.table.columns];
-
-//   const dragIndex = updatedColumns.findIndex(
-//     (c) => c.id === draggedId
-//   );
-
-//   const overIndex = updatedColumns.findIndex(
-//     (c) => c.id === targetId
-//   );
-
-//   if (dragIndex === -1 || overIndex === -1)
-//     return;
-
-//   const [draggedColumn] =
-//     updatedColumns.splice(dragIndex, 1);
-
-//   updatedColumns.splice(overIndex, 0, draggedColumn);
-
-//   updateNode(updatedColumns);
-
-//   dragItem.current = null;
-//   dragOverItem.current = null;
-// };
 
 const onDragStart = (
   ev: React.DragEvent<HTMLSpanElement>,
