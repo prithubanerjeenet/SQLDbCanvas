@@ -175,7 +175,7 @@ export default function Index() {
       sql += `CREATE TABLE ${table.name} (\n`;
 
       table.columns.forEach((col, index) => {
-        const needLength = col.type === "INT" || col.type === "DATE" || col.type === "BOOLEAN" || col.type === "VARBINARY(MAX)"? false : true;
+        const needLength = col.type === "INT" || col.type === "DATE" || col.type === "BOOLEAN" || col.type === "VARBINARY(MAX)" || col.type === "DECIMAL" ? false : true;
         sql += `  ${col.name} ${col.type} ${needLength && col.typeLength ? `(${col.typeLength})` : ""}`;
 
         if (!col.isNullable) sql += " NOT NULL";

@@ -266,7 +266,7 @@ const onDrop = (ev: React.DragEvent<HTMLLIElement>) => {
                   updateColumn(col.id, "name", e.target.value)
                 }
                 placeholder="ColumnName"
-              
+                title={col.name}
               />
 
               <select
@@ -312,7 +312,7 @@ const onDrop = (ev: React.DragEvent<HTMLLIElement>) => {
                 }
                 placeholder="Length"
                 style={{ width: "60px" }}
-                disabled={col.type !== "VARCHAR" && col.type !== "NCHAR" && col.type !== "NVARCHAR" && col.type !== "VARBINARY(MAX)"}
+                disabled={col.type !== "VARCHAR" && col.type !== "NCHAR" && col.type !== "NVARCHAR" && col.type !== "VARBINARY(MAX)" && col.type !== "DECIMAL"}
               />
 
               <label>
