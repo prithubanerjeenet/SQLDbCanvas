@@ -11,6 +11,8 @@ import {
 import type { Connection, Edge, Node } from "@xyflow/react";
 import type { Table, TableNodeData } from "../pageTypes/TableType";
 import TableNode from "../components/TableNode";
+import { mapToCSharpType } from "../pageTypes/MapToCSharpType";
+import { pluralize } from "../utils/Pluralize";
 
 const STORAGE_KEY = "er-diagram";
 
@@ -225,6 +227,71 @@ export default function Index() {
     setShowModal(true);
   };
 
+  const generateEfClasses = () => {
+  let output = "";
+
+  output += `using System;\n`;
+  output += `using System.Collections.Generic;\n`;
+  output += `using System.ComponentModel.DataAnnotations;\n`;
+  output += `using System.ComponentModel.DataAnnotations.Schema;\n\n`;
+
+  nodes.forEach((node) => {
+    const table = node.data.table;
+
+    output += `[Table("${table.name}")]\n`;
+    output += `public class ${table.name}\n{\n`;
+
+    // Properties
+    table.columns.forEach((col) => {
+      const csType = mapToCSharpType(col.type);
+
+      if (col.isPrimary) {
+        output += `    [Key]\n`;
+      }
+
+      output += `    public ${csType}${col.isNullable && csType !== "string" ? "?" : ""} ${col.name} { get; set; }\n\n`;
+    });
+
+    // Parent Navigation (Collections)
+    edges.forEach((edge) => {
+      if (edge.source === node.id) {
+        const childNode = nodes.find((n) => n.id === edge.target);
+        if (!childNode) return;
+
+        const childTable = childNode.data.table;
+        const pluralName = pluralize(childTable.name);
+
+        output += `    public ICollection<${childTable.name}> ${pluralName} { get; set; } = new List<${childTable.name}>();\n\n`;
+      }
+    });
+
+    // Child Navigation (Reference)
+    edges.forEach((edge) => {
+      if (edge.target === node.id) {
+        const parentNode = nodes.find((n) => n.id === edge.source);
+        if (!parentNode) return;
+
+        const parentTable = parentNode.data.table;
+
+        const fkColumnId = edge.targetHandle?.replace("target-", "");
+        const fkColumn = table.columns.find(
+          (c) => String(c.id) === fkColumnId
+        );
+
+        if (!fkColumn) return;
+
+        output += `    [ForeignKey("${fkColumn.name}")]\n`;
+        output += `    public ${parentTable.name} ${parentTable.name} { get; set; }\n\n`;
+      }
+    });
+
+    output += `}\n\n`;
+  });
+
+  setSqlScript(output);
+  setShowModal(true);
+};
+
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -263,7 +330,8 @@ export default function Index() {
         
         <button onClick={addTable}>Add Table (Ctrl+A)</button>
         <button onClick={exportJSON}>Export</button>
-        <button onClick={generateSQL}>Generate SQL</button>
+        <button onClick={generateSQL} style={{background:'#cb6205'}}>Generate SQL</button>
+        <button onClick={generateEfClasses} style={{background:'green', color:'white'}}>Generate EF Classes</button>
         <input type="file" onChange={importJSON} placeholder="Choose SQL DBCanvas Json file." title="Choose SQL DbCanvas Json file."/>
       </div>
 
